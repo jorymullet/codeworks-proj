@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;700&display=swap')
+// fonts
+$font-1: 'Public Sans', sans-serif
+.font-1-thin
+  font-family: $font-1
+  font-weight: 400
+.font-1-bold
+  font-family: $font-1
+  font-weight: 700
+  
+$font-2: 'Open Sans', sans-serif
+
+// colors
+$orange: #CD8A70
+$lightgrey: #eaeaea
+$grey: #E2E8EC
+$darkgrey: #bdbdbd
+$mild-blue: rgb(64, 131, 169)
+
+// heights
+$nav-height: 4rem
+
+// indeces
+$nav-index: 900
+$mobile-nav-index: 905
+$loading-index: 960
+$modals-index: 950
+
+// widths
+$side-nav-min: 1000px
+
+.pro-title
+  @extend .font-1-bold
+  font-size: 24px
+  margin-bottom: 1rem
+
+.card
+  box-shadow: 0 4px 1rem 0 rgba(0,0,0,.1)
+  padding: 1.5rem
+  border-radius: .25rem
+  display: grid
+
+.dotdotdot
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.italic
+  font-style: italic
+
+.profile-image
+  height: 2rem
+  width: 2rem
+  border-radius: 2rem
+
+.instruction 
+  background-color: #EEE
+  padding: .5rem
+  margin-top: 1rem
+  border-left: thick solid $orange
+
+
+.pro-member
+  display: grid
+  grid-template-columns: min-content max-content
+  //background-color: $lightgrey
+  //border: thin solid $lightgrey
+  border-radius: 2rem
+  align-items: center
+  margin-right: 2rem
+  user-select: none
+  padding: .5rem
+  &.small
+    width: fit-content
+    height: fit-content
+    .image
+      height: 2rem
+      width: 2rem
+    .name
+      font-size: 12px
+      padding-right: 0
+  .image
+    height: 2.5rem
+    width: 2.5rem
+    border-radius: 2rem
+    overflow: hidden
+    > img
+      height: 100%
+      width: 100%
+  .name
+    padding: 0 1rem
+    font-weight: bold
+
+
+.pro-project
+  padding: 1rem 1rem
+  position: relative
+  transition: transform .25s
+  align-items: center
+  width: 12rem
+  height: 12rem
+  &:hover
+    transform: scale(1.01)
+  .logo
+    position: absolute
+    top: 1rem
+    right: 1rem
+    height: 1.25rem
+  .name
+    color: $orange
+    text-align: center
+    margin: 0

@@ -1,0 +1,115 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSuperAdmin () {
+      return isRole('SUPER_ADMIN')
+    }
+    
+    function isRole (role) {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role
+    }
+
+    function isPartOfOrg (orgId) {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.org_id == orgId
+    }
+
+    function isUser (uid) {
+      return request.auth.uid == uid
+    }
+
+    function doesNotExist (coll, id) {
+      return !exists(/databases/$(database)/documents/$(coll)/$(id))
+    }
+
+    match /{path=**}/sprint_members/{userId} {
+      allow read: if true //isPartOfOrg(userId) || isSuperAdmin()
+      allow write: if isUser(userId) || isSuperAdmin()
+    }
+
+    match /tags/{tagId} {
+      allow read: if doesNotExist('tags', tagId) || isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /link_groups/{linkGroupId} {
+      allow read: if doesNotExist('link_groups', linkGroupId) || isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /sprints/{sprintId} {
+      allow read: if doesNotExist('sprints', sprintId) || isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /previous_workspaces/{workspaceId} {
+      allow read: if isSuperAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    match /workspaces/{workspaceId} {
+      allow read: if isSuperAdmin();
+      allow write: if isSuperAdmin();
+    }
+
+    match /progresses/{progressId} {
+      allow read: if doesNotExist('progresses', progressId) || isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /conversations/{conversationId} {
+      allow read: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /resources/{resourceId} {
+      allow read: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /projects/{projectId} {
+      allow read: if doesNotExist('projects', projectId) || isPartOfOrg(resource.data.org_id) || isSuperAdmin() 
+      allow delete: if isPartOfOrg(resource.data.org_id) || isSuperAdmin()
+      allow write: if isPartOfOrg(request.resource.data.org_id) || isSuperAdmin()
+    }
+
+    match /orgs/{orgId} {
+      allow write: if (isPartOfOrg(orgId) && isRole('ADMIN')) || isSuperAdmin()
+      allow read: if isPartOfOrg(orgId) || isSuperAdmin() 
+    }
+
+    match /users/{userId} {
+      allow read: if doesNotExist('users', userId) || isSuperAdmin() || (resource.data.role == 'SUPER_ADMIN') || isPartOfOrg(resource.data.org_id)
+      allow update: if isSuperAdmin() || (isPartOfOrg(request.resource.data.org_id) && isRole('ADMIN')) || isUser(userId)
+    }
+
+    match /invites/{inviteId} {
+      allow read: if true;
+      allow update: if request.resource.data.status == 'DENIED'
+      allow create: if (request.resource.data.type == 'ORG_MASS') && (isSuperAdmin() || (isRole('ADMIN') && isPartOfOrg(request.resource.data.org.id)))
+    }
+    
+    match /stats {
+      match /workspaces {
+        allow read: if isSuperAdmin() || isRole('ADMIN');
+        allow write: if isSuperAdmin();
+      }
+      match /orgs/byOrg/{orgId} {
+        allow read: if isSuperAdmin() || (isRole('ADMIN') && isPartOfOrg(orgId))
+      }
+    }
+
+    match /admin {
+      match /settings {
+        allow read: if true;
+        allow write: if isSuperAdmin();
+      }
+    }
+  }
+}

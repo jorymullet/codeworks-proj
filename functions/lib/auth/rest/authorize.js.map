@@ -1,0 +1,1 @@
+{"version":3,"file":"authorize.js","sourceRoot":"","sources":["../../../src/auth/rest/authorize.ts"],"names":[],"mappings":";;AASa,QAAA,SAAS,GAAG,KAAK,EAAE,GAAY,EAAE,GAAa,EAAE,EAAE;IAC7D,OAAO,CAAC,GAAG,CAAC,KAAK,CAAC,CAAA;IAElB,OAAO,GAAG,CAAC,QAAQ,CAAC,oBAAoB,CAAC,CAAA;AAC3C,CAAC,CAAA"}

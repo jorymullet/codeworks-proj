@@ -1,0 +1,22 @@
+[
+  {
+    "links": [
+      {
+        "name": "Organizations",
+        "route": "SuperAdmin"
+      },
+      {
+        "name": "Workspaces",
+        "route": "SuperWorkspaces"
+      },
+      {
+        "name": "Sprints",
+        "route": "SuperSprints"
+      },
+      {
+        "name": "Code Snippets",
+        "route": "SuperCodeSnippets"
+      }
+    ]
+  }
+]

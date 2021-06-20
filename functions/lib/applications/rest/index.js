@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const routers_1 = require("../../utils/routers");
+exports.restRouter = routers_1.default.whitelisted;
+exports.adminRouter = routers_1.default.admin;
+const post_application_1 = require("./post-application");
+exports.restRouter.post('', post_application_1.postApplication);
+const put_application_status_1 = require("./put-application-status");
+exports.adminRouter.put('/:applicationId/status', put_application_status_1.putApplicationStatus);
+const post_application_payment_1 = require("./post-application-payment");
+exports.restRouter.post('/:applicationId/payment', post_application_payment_1.postApplicationPayment);
+const post_application_payment_email_1 = require("./post-application-payment-email");
+exports.adminRouter.post('/:applicationId/payment/email', post_application_payment_email_1.postApplicationPaymentEmail);
+const post_application_questionnaire_1 = require("./post-application-questionnaire");
+exports.restRouter.post('/:applicationId/questionnaire', post_application_questionnaire_1.postApplicationQuestionnaire);
+const post_application_questionnaire_email_1 = require("./post-application-questionnaire-email");
+exports.adminRouter.post('/:applicationId/questionnaire/email', post_application_questionnaire_email_1.postApplicationQuestionnaireEmail);
+const post_application_assessors_email_1 = require("./post-application-assessors-email");
+exports.adminRouter.post('/:applicationId/assessors-email', post_application_assessors_email_1.postApplicationAssessorsEmail);
+//# sourceMappingURL=index.js.map

@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "invanti-test",
+    "dev": "invanti-dev",
+    "test": "invanti-test",
+    "prod": "invanti-prod"
+  }
+}
+

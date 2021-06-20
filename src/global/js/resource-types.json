@@ -1,0 +1,22 @@
+{
+  "podcast": {
+    "name": "Podcast",
+    "icon": "podcasts"
+  },
+  "article": {
+    "name": "Article",
+    "icon": "article"
+  },
+  "research_report": {
+    "name": "Research Report",
+    "icon": "summarize"
+  },
+  "book": {
+    "name": "Book",
+    "icon": "book"
+  },
+  "video": {
+    "name": "Video",
+    "icon": "movie"
+  }
+}

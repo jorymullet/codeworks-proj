@@ -1,0 +1,22 @@
+steps:
+  # Insert other build steps here
+  # Install
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: ['install']
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: ['install', '-g', 'firebase-tools',]
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: ['--prefix', './functions', 'install']
+  # Test - if your into that
+  #- name: 'gcr.io/cloud-builders/npm'
+  #  args: ['run', 'test:unit']
+  # Build
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: ['rebuild', 'node-sass']
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: ['run', 'build']
+  - name: 'gcr.io/$PROJECT_ID/firebase'
+    args: ['use', 'invanti-dev']
+  # Deploy
+  - name: 'gcr.io/cloud-builders/npm:node-10.10.0'
+    args: ['run', 'deploy',]
